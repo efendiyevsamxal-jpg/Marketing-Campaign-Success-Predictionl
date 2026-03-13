@@ -1,5 +1,29 @@
+Marketing Campaign Success Prediction
+Project Overview
+
+The goal of this project is to build a Machine Learning model that predicts whether a marketing campaign will be successful or not.
+
+In real-world marketing campaigns, not every customer responds positively to promotional offers. Companies need to identify the customers who are more likely to respond in order to reduce marketing costs and increase the effectiveness of their campaigns.
+
+In this project, a machine learning pipeline was developed to analyze customer data and predict the outcome of a marketing campaign.
+
+The project includes several important stages such as:
+
+Data exploration
+
+Data preprocessing
+
+Feature engineering
+
+Model training
+
+Model evaluation
+
+Feature importance analysis
+
+The final model predicts whether a customer will respond positively to a marketing campaign based on their personal and financial information.
+
 Random Forest Classification Model
-📌 Project Overview
 
 This project focuses on building a Random Forest classification model to predict the target class using structured dataset features.
 
