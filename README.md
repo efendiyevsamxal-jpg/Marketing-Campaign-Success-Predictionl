@@ -1,138 +1,198 @@
-Marketing Campaign Success Prediction
-Project Overview
+📊 Marketing Campaign Success Prediction
+📌 Project Overview
 
-The goal of this project is to build a Machine Learning model that predicts whether a marketing campaign will be successful or not.
+This project focuses on predicting the success of a marketing campaign using various machine learning models.
 
-In real-world marketing campaigns, not every customer responds positively to promotional offers. Companies need to identify the customers who are more likely to respond in order to reduce marketing costs and increase the effectiveness of their campaigns.
+The main objective is to classify whether a customer will respond positively (result) to a marketing campaign based on demographic, financial, and campaign-related features.
 
-In this project, a machine learning pipeline was developed to analyze customer data and predict the outcome of a marketing campaign.
+The project includes a complete end-to-end machine learning pipeline, starting from data preprocessing to model optimization and interpretation.
 
-The project includes several important stages such as:
 
-Data exploration
+📚 Libraries Used
 
-Data preprocessing
+The following Python libraries were used throughout the project:
 
-Feature engineering
-
-Model training
-
-Model evaluation
-
-Feature importance analysis
-
-The final model predicts whether a customer will respond positively to a marketing campaign based on their personal and financial information.
-
-Random Forest Classification Model
-
-This project focuses on building a Random Forest classification model to predict the target class using structured dataset features.
-
-The objective of the project is to apply a complete machine learning workflow including data analysis, preprocessing, model training, optimization, and prediction on new data.
-
-The model learns patterns from historical data and classifies observations into their respective categories.
-
-Exploratory Data Analysis (EDA)
-
-The first step of the project involved analyzing the dataset to understand its structure and characteristics.
-
-During this stage:
-
-dataset columns and data types were inspected
-
-missing values were checked
-
-feature distributions were analyzed
-
-potential relationships between variables were explored
-
-Exploratory analysis helps identify relevant variables and prepares the dataset for machine learning modeling.
-
-Data Preprocessing
-
-Before training the model, several preprocessing steps were performed:
-
-cleaning and preparing the dataset
-
-selecting relevant features
-
-separating input variables and the target variable
-
-The dataset was structured into:
-
-X (input features)
-
-y (target variable)
-
-This step ensures that the dataset is properly prepared for the machine learning algorithms.
-
-Model Development
-
-The classification model was built using the scikit-learn library.
-
-Random Forest was chosen because it is an ensemble learning algorithm that combines multiple decision trees to improve prediction accuracy and model stability.
-
-Default Random Forest Model
-
-Initially, a default Random Forest model was trained using the standard parameters provided by the library.
-
-This baseline model helps understand the initial performance of the algorithm before optimization.
-
-The model was trained on the training dataset and evaluated using the testing dataset.
-
-Optimized Random Forest Model
-
-After evaluating the default model, the Random Forest classifier was further improved through hyperparameter tuning.
-
-Model parameters such as:
-
-number of trees
-
-tree depth
-
-minimum samples per split
-
-minimum samples per leaf
-
-were adjusted to improve model performance and reduce potential overfitting.
-
-This optimized model provides better predictive performance compared to the default configuration.
-
-Train-Test Split
-
-To evaluate the model properly, the dataset was divided into training and testing subsets.
-
-80% Training Data
-
-20% Testing Data
-
+Data Manipulation & Analysis
+pandas
+numpy
+Data Visualization
+matplotlib
+seaborn
+Machine Learning Models
+scikit-learn
+xgboost
+lightgbm
+catboost
 Model Evaluation
+roc_auc_score
+confusion_matrix
+classification_report
+Feature Engineering & Statistics
+scipy
+statsmodels (VIF)
+Hyperparameter Optimization
+optuna
 
-Both the default and optimized models were evaluated using classification metrics.
+⚙️ Data Preprocessing
 
-Evaluation metrics included:
+All preprocessing steps were carefully applied to improve model performance:
 
-Accuracy – overall prediction correctness
+1. Data Cleaning
+Dropped unnecessary columns:
+ID, pdays, previous
+Converted target variable:
+"yes" → 0
+"no" → 1
+2. Feature Engineering
 
-Precision – accuracy of positive predictions
+New features were created:
 
-Recall – ability to correctly identify positive cases
+Age Group
+Binned age into:
+Young
+Middle-Aged
+Senior
+Elderly
+Job Average Balance
+Mean balance per job category
+Balance Difference
+Difference between individual balance and job average
+3. Encoding
+Applied Label Encoding to categorical variables for general models
+Used:
+One-Hot Encoding (for KNN)
+Raw categorical features (for CatBoost)
+4. Outlier Treatment (KNN dataset)
+Used IQR method
+Applied capping instead of removing outliers
+5. Distribution Check
+Used Kolmogorov-Smirnov test to check normality
+6. Feature Selection
+Correlation Analysis
+Spearman correlation used
+Selected features based on correlation with target
+Multicollinearity Check
+Used:
+Correlation filtering
+VIF (Variance Inflation Factor)
+7. WOE Transformation (for Logistic Regression)
+Numerical variables converted into categories using quantiles
+Weight of Evidence (WOE) applied
+Selected variables based on correlation
 
-F1 Score – balance between precision and recall
+8. Dataset Splitting
 
-Confusion Matrix – detailed view of prediction results
+Created multiple datasets:
 
-These metrics allow comparison between the default and optimized models.
+inputs → general models
+inputs_knn → KNN
+inputs_lr → Logistic Regression (WOE)
+inputs_cat → CatBoost (categorical)
 
-Model Deployment (Prediction on New Data)
+Split into:
 
-After training and evaluating the optimized model, it was used to generate predictions for new data.
+Train (70%)
+Test (30%)
 
-In this stage:
+ Default Models
 
-new observations are provided to the model
+The following baseline models were trained:
 
-the trained model processes the input features
+Logistic Regression
+KNN (K-Nearest Neighbors)
+Random Forest
+XGBoost
+LightGBM
+CatBoost
+CatBoost (with categorical features)
 
-the model outputs predicted class labels
+Each model was evaluated using:
 
-This step demonstrates how the trained model can be applied to classify unseen data in real-world scenarios.
+ROC-AUC
+Gini coefficient
+
+Model Optimization with Optuna
+
+Hyperparameter tuning was performed using Optuna for 5 models:
+
+KNN
+Random Forest
+XGBoost
+LightGBM
+CatBoost
+
+Each model was optimized using:
+
+Cross-validation
+ROC-AUC as scoring metric
+
+Model Selection
+
+The best model was not selected based on a single metric. Instead, multiple evaluation criteria were considered:
+
+Test Gini score (overall model performance on unseen data)
+Train Gini score (model learning capacity)
+Gini Gap (difference between Train and Test scores)
+
+👉 The Gini Gap indicates the level of overfitting.
+
+The goal of the selection process was to achieve:
+
+High test performance
+Low overfitting (small Gini Gap)
+
+All models were compared based on these criteria, and the final selection was made by choosing the model that provided the best balance between performance and generalization.
+
+➡️ As a result, the Optimized XGBoost model (tuned with Optuna) was selected as the best-performing model.
+
+Feature Importance
+
+Using the best model:
+importances = best_xgb_model.feature_importances_
+Normalized feature importance calculated
+Features with importance > 1% selected
+
+SHAP Analysis
+
+To interpret the model:
+
+Used SHAP values:
+explainer = shap.TreeExplainer(best_xgb_model)
+shap_values = explainer.shap_values(X_train)
+
+Selected most important features
+Created SHAP-based feature analysis
+
+Final Model Building
+
+Selected most important features:
+
+important_features_df['Feature'].tolist()
+
+Created final dataset:
+X_train_fin, X_test_fin, y_train_fin, y_test_fin = train_test_split(...)
+
+Final Model (Optimized XGBoost)
+
+Best parameters obtained via Optuna:
+
+best_xgb_model_fin = XGBClassifier(**best_params, random_state=42)
+Final evaluation:
+train_and_evaluate_model(
+    'XGB optimized for selected features',
+    best_xgb_model_fin,
+    X_train_fin,
+    y_train_fin,
+    X_test_fin,
+    y_test_fin
+)
+
+Conclusion
+Multiple ML models were tested and compared
+Hyperparameter tuning significantly improved performance
+XGBoost achieved the best results
+SHAP provided strong interpretability
+Feature selection improved model efficiency and generalization
+optuna
+Model Explainability
+shap
