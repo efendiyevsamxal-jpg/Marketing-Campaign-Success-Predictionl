@@ -153,6 +153,7 @@ Normalized feature importance calculated
 Features with importance > 1% selected
 
 Model Interpretation (SHAP Analysis)
+
 To understand how our XGBoost model makes decisions, we utilized the SHAP (SHapley Additive exPlanations) methodology. The SHAP Summary Plot highlights the following key insights:
 
 Housing: Interestingly, customers with an existing housing loan (value=1, red) show a higher probability of responding positively to the campaign compared to those without one.
