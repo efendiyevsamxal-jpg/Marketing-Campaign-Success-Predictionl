@@ -152,16 +152,12 @@ importances = best_xgb_model.feature_importances_
 Normalized feature importance calculated
 Features with importance > 1% selected
 
-SHAP Analysis
+Model Interpretation (SHAP Analysis)
+To understand how our XGBoost model makes decisions, we utilized the SHAP (SHapley Additive exPlanations) methodology. The SHAP Summary Plot highlights the following key insights:
 
-To interpret the model:
+Housing: Interestingly, customers with an existing housing loan (value=1, red) show a higher probability of responding positively to the campaign compared to those without one.
 
-Used SHAP values:
-explainer = shap.TreeExplainer(best_xgb_model)
-shap_values = explainer.shap_values(X_train)
-
-Selected most important features
-Created SHAP-based feature analysis
+Balance: Higher account balances are positively correlated with campaign success, indicating that financial stability is a key driver for customer engagement.
 
 Final Model Building
 
